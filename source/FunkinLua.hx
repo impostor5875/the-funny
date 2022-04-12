@@ -259,6 +259,13 @@ class FunkinLua {
 			luaTrace("Script doesn't exist!");
 		});
 		
+		Lua_helper.add_callback(lua, "addGlitchEffect", function(tag:String) {
+			if(PlayState.modchartSprites.exists(tag)) {
+				var stuff:ModchartSprite = PlayState.modchartSprites.get(tag);
+				stuff.shader = PlayState.the3DWorldEffect.shader;
+			}
+		});
+		
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
