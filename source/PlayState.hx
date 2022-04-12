@@ -25,6 +25,7 @@ import flixel.addons.effects.chainable.FlxRainbowEffect;
 import flixel.addons.effects.chainable.FlxShakeEffect;
 import flixel.addons.effects.chainable.FlxTrailEffect;
 import flixel.addons.effects.chainable.FlxWaveEffect;
+import Shaders.PulseEffect;
 import flixel.addons.effects.chainable.IFlxEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
@@ -114,6 +115,9 @@ class PlayState extends MusicBeatState
 	public var songSpeedType:String = "multiplicative";
 	public var noteKillOffset:Float = 350;
 	
+	var _glitch:FlxGlitchEffect;
+	var _effectSprite:FlxEffectSprite;
+	
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
@@ -142,6 +146,7 @@ class PlayState extends MusicBeatState
 	private var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
+	private static var resetSpriteCache:Bool = false;
 
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
@@ -215,6 +220,10 @@ class PlayState extends MusicBeatState
 	var grpLimoParticles:FlxTypedGroup<BGSprite>;
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:BGSprite;
+	
+	var wavyBGs:Array<String> = [];
+
+	public static var screenshader:Shaders.PulseEffect = new PulseEffect();
 
 	var upperBoppers:BGSprite;
 	var bottomBoppers:BGSprite;
@@ -227,6 +236,8 @@ class PlayState extends MusicBeatState
 
 	public static var the3DWorldEffect:WiggleEffect;
 	public static var the3DWorldEffectWavy:WiggleEffect;
+	public static var wavyShader:Shaders.PulseEffect = new PulseEffect();
+	public static var activeWavy:Bool = false;
 	
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
