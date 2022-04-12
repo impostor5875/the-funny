@@ -19,7 +19,13 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
+import flixel.addons.effects.chainable.FlxGlitchEffect;
+import flixel.addons.effects.chainable.FlxOutlineEffect;
+import flixel.addons.effects.chainable.FlxRainbowEffect;
+import flixel.addons.effects.chainable.FlxShakeEffect;
+import flixel.addons.effects.chainable.FlxTrailEffect;
 import flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.effects.chainable.IFlxEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -219,6 +225,9 @@ class PlayState extends MusicBeatState
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
 
+	public static var the3DWorldEffect:WiggleEffect;
+	public static var the3DWorldEffectWavy:WiggleEffect;
+	
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
@@ -293,6 +302,42 @@ class PlayState extends MusicBeatState
 		{
 			keysPressed.push(false);
 		}
+		
+		wavyBGs = CoolUtil.coolTextFile(Paths.txt('wavyBackgrounds'));
+
+
+
+		FlxG.save.data.playingNow = false;
+
+		_glitch = new FlxGlitchEffect(10, 2, 0.1);
+		#if MODS_ALLOWED
+		Paths.destroyLoadedImages(resetSpriteCache);
+		#end
+		resetSpriteCache = false;
+		
+		the3DWorldEffect = new WiggleEffect();
+		the3DWorldEffect.effectType = WiggleEffectType.FLAG;
+		the3DWorldEffect.waveAmplitude = 0.1;
+		the3DWorldEffect.waveFrequency = 5;
+		the3DWorldEffect.waveSpeed = 2.25;
+
+		the3DWorldEffectWavy = new WiggleEffect();
+		the3DWorldEffectWavy.effectType = WiggleEffectType.WAVY;
+		the3DWorldEffectWavy.waveAmplitude = 0.2;
+		the3DWorldEffectWavy.waveFrequency = 3;
+		the3DWorldEffectWavy.waveSpeed = 1.25;
+
+		screenshader.waveAmplitude = 1;
+		screenshader.waveFrequency = 2;
+		screenshader.waveSpeed = 1;
+		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
+		screenshader.shader.uampmul.value[0] = 0;
+
+		#if windows
+		screenshader.waveAmplitude = 1;
+       		screenshader.waveFrequency = 2;
+        	screenshader.waveSpeed = 1;
+        	screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
