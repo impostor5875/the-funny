@@ -2231,6 +2231,31 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		if(activeWavy)
+			{
+				wavyShader.update(elapsed);
+			}
+		the3DWorldEffect.update(elapsed);
+		the3DWorldEffectWavy.update(elapsed);
+		
+		if(disableTheTripperAt == curStep)
+			{
+				disableTheTripper = true;
+			}
+		if(isDead)
+			{
+				disableTheTripper = true;
+			}
+		
+
+
+		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]);
+		screenshader.update(elapsed);
+		if(disableTheTripper)
+			{
+				screenshader.shader.uampmul.value[0] -= (elapsed / 2);
+			}
+		
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
