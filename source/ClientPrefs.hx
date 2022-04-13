@@ -97,7 +97,6 @@ class ClientPrefs {
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.eyesores = eyesores;
-		FlxG.save.data.antispam = antispam;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
@@ -155,9 +154,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.eyesores != null) {
 			eyesores = FlxG.save.data.eyesores;
-		}
-		if(FlxG.save.data.antispam != null) {
-			antispam = FlxG.save.data.antispam;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
