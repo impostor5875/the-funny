@@ -3805,6 +3805,11 @@ class PlayState extends MusicBeatState
 				boyfriend.dance();
 				//boyfriend.animation.curAnim.finish();
 			}
+			
+			else if (canMiss && ClientPrefs.antispam) 
+			{
+				ghostMiss(controlArray[i], i, true);
+			}
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
