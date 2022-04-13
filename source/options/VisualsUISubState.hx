@@ -69,13 +69,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
-		
-		var option:Option = new Option('Anti-Spam',
-			"makes you miss if you spam. not very good for d&b mods. (so you might wanna uncheck this)",
-			'antispam',
-			'bool',
-			true);
-		addOption(option);
 
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
