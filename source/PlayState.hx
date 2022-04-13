@@ -230,6 +230,9 @@ class PlayState extends MusicBeatState
 	var bottomBoppers:BGSprite;
 	var santa:BGSprite;
 	var heyTimer:Float;
+	
+	var disableTheTripper:Bool = false;
+	var disableTheTripperAt:Int;
 
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
