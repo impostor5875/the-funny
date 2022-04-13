@@ -3104,6 +3104,21 @@ class PlayState extends MusicBeatState
 			
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
+
+			case 'Rainbow Eyesore':
+					if(ClientPrefs.eyesores) {
+						var timeRainbow:Int = Std.parseInt(value1);
+						var speedRainbow:Float = Std.parseFloat(value2);
+						disableTheTripper = false;
+						disableTheTripperAt = timeRainbow;
+						FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]);
+						screenshader.waveAmplitude = 1;
+						screenshader.waveFrequency = 2;
+						screenshader.waveSpeed = speedRainbow;
+						screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
+						screenshader.shader.uampmul.value[0] = 1;
+						screenshader.Enabled = true;
+					}
 			
 			case 'Change Scroll Speed':
 				if (songSpeedType == "constant")
