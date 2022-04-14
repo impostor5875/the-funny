@@ -2666,20 +2666,20 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				// Kill extremely late notes and cause misses (antispam or normal misses??)
-				//if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
-				//{
-					//if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
-						//noteMiss(daNote);
-					//}
+				// Kill extremely late notes and cause misses (not antispam !!)
+				if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
+				{
+					if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
+						noteMiss(daNote);
+					}
 
-					//daNote.active = false;
-					//daNote.visible = false;
+					daNote.active = false;
+					daNote.visible = false;
 
-					//daNote.kill();
-					//notes.remove(daNote, true);
-					//daNote.destroy();
-				//}
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
 			});
 		}
 		checkEventNote();
@@ -3652,6 +3652,7 @@ class PlayState extends MusicBeatState
 				Conductor.songPosition = FlxG.sound.music.time;
 
 				var canMiss:Bool = !ClientPrefs.ghostTapping;
+				var antispam:Bool = ClientPrefs.antispam;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
 				var pressNotes:Array<Note> = [];
@@ -3668,7 +3669,12 @@ class PlayState extends MusicBeatState
 							sortedNotesList.push(daNote);
 							//notesDatas.push(daNote.noteData);
 						}
-						canMiss = true;
+						if(antispam == true)
+						{
+							canMiss = true; 
+							//maybe commenting this out disables antispam?
+							//wow it actually did, i didn't expect manny to be right lol
+						}
 					}
 				});
 				sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
@@ -3682,7 +3688,7 @@ class PlayState extends MusicBeatState
 								notes.remove(doubleNote, true);
 								doubleNote.destroy();
 							} else
-								notesStopped = true;
+								notesStopped = true; 
 						}
 							
 						// eee jack detection before was not super good
