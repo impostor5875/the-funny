@@ -2666,20 +2666,20 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				// Kill extremely late notes and cause misses
-				if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
-				{
-					if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
-						noteMiss(daNote);
-					}
+				// Kill extremely late notes and cause misses (antispam or normal misses??)
+				//if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
+				//{
+					//if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
+						//noteMiss(daNote);
+					//}
 
-					daNote.active = false;
-					daNote.visible = false;
+					//daNote.active = false;
+					//daNote.visible = false;
 
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
+					//daNote.kill();
+					//notes.remove(daNote, true);
+					//daNote.destroy();
+				//}
 			});
 		}
 		checkEventNote();
