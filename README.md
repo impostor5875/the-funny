@@ -1,5 +1,5 @@
 # Friday Night Funkin' - Psych Engine (but the funny)
-every single piece of new code here (except for VisualsUISubstate) is stolen from strident engine because i have no idea what i'm doing
+every single piece of new code here (except for VisualsUISubState and antispam option) is stolen from strident engine because i have no idea what i'm doing
 
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
