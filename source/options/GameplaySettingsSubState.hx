@@ -63,6 +63,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Anti-Spam',
+			"makes you miss if you spam. not very good for a d&b mod. that's why it's disabled by default",
+			'antispam',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
