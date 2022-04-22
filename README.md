@@ -1,5 +1,6 @@
 # Friday Night Funkin' - Psych Engine (but the funny)
-every single piece of new code here (except for VisualsUISubState and antispam option) is stolen from strident engine because i have no idea what i'm doing
+every single piece of new code that relates to shaders is stolen from strident engine because i had no idea what i was doing
+also flxtweens are good
 
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
