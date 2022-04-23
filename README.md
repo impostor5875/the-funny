@@ -1,6 +1,8 @@
 # Friday Night Funkin' - Psych Engine (but the funny)
 every single piece of new code here (except for VisualsUISubstate) is stolen from strident engine because i have no idea what i'm doing
 
+oh also this was the build used in the upcoming uncle fred update [check the demo out here](https://gamebanana.com/wips/63859)
+
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
 
