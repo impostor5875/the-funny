@@ -47,8 +47,6 @@ class Paths
 		'scripts',
 		'achievements'
 	];
-	public static var customImagesLoaded:Map<String, Bool> = new Map();
-	public static var customSoundsLoaded:Map<String, Sound> = new Map();
 	#end
 
 	public static function excludeAsset(key:String) {
