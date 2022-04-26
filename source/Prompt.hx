@@ -58,14 +58,12 @@ class Prompt extends MusicBeatSubstate
 		panelbg = new FlxSprite(0, 0);
 		makeSelectorGraphic(panel,300,150,0xff999999);
 		makeSelectorGraphic(panelbg,302,165,0xff000000);
-		//panel.makeGraphic(300, 150, 0xff999999);
-		//panel.loadGraphic(Paths.image('ui/promptbg'));
-		/*
+                /* trace('the funny');
 		buttons.frames = Paths.getSparrowAtlas('ui/prompt_buttons');
 		buttons.animation.addByIndices('but0', 'buttons', [0], '', 0);
 		buttons.animation.addByIndices('but1', 'buttons', [1], '', 0);
 		buttons.animation.play('but0');
-		buttons.scrollFactor.set();*/
+		buttons.scrollFactor.set();/*
 		panel.scrollFactor.set();
 		panel.screenCenter();
 		panelbg.scrollFactor.set();
@@ -75,7 +73,6 @@ class Prompt extends MusicBeatSubstate
 		add(panel);
 		add(buttonAccept);
 		add(buttonNo);
-		//add(buttons);
 		var textshit:FlxText = new FlxText(buttonNo.width*2, panel.y, 300, theText, 16);
 		textshit.alignment = 'center';
 		add(textshit);
@@ -89,57 +86,17 @@ class Prompt extends MusicBeatSubstate
 		textshit.scrollFactor.set();
 		}
 	}
-	/*
-	override public function update(elapsed:Float):Void 
-	{
-		super.update(elapsed);
-		
-		
-		
-		if (!goAnyway){
-			
-			
-			
-		if (controls.UI_LEFT_P || controls.UI_RIGHT_P){
-			if (selected == 0){
-				selected = 1;
-			}else{
-				selected = 0;
-			}
-			FlxG.sound.play(Paths.sound('scrollMenu'));
-			//buttons.animation.play('but' + selected);
-		}
-		buttonAccept.color.brightness = 0.5;
-		buttonNo.color.brightness = 0.5;
-		if (selected == 0 ) buttonAccept.color.brightness = 0.9;
-		if (selected == 1 ) buttonNo.color.brightness = 0.9;
-		if (controls.ACCEPT ){
-			if (selected == 0){
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				if(okc != null)okc();
-			}else{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if(cancelc != null)cancelc();
-			}
-			close();
-		}
-		
-		}
-	}
-	*/
 	
 	function makeSelectorGraphic(panel:FlxSprite,w,h,color:FlxColor)
 	{
 		panel.makeGraphic(w, h, color);
 		panel.pixels.fillRect(new Rectangle(0, 190, panel.width, 5), 0x0);
 		
-		// Why did i do this? Because i'm a lmao stupid, of course
-		// also i wanted to understand better how fillRect works so i did this shit lol???
 		panel.pixels.fillRect(new Rectangle(0, 0, cornerSize, cornerSize), 0x0);														 //top left
 		drawCircleCornerOnSelector(panel,false, false,color);
-		panel.pixels.fillRect(new Rectangle(panel.width - cornerSize, 0, cornerSize, cornerSize), 0x0);							 //top right
+		panel.pixels.fillRect(new Rectangle(panel.width - cornerSize, 0, cornerSize, cornerSize), 0x0);
 		drawCircleCornerOnSelector(panel,true, false,color);
-		panel.pixels.fillRect(new Rectangle(0, panel.height - cornerSize, cornerSize, cornerSize), 0x0);							 //bottom left
+		panel.pixels.fillRect(new Rectangle(0, panel.height - cornerSize, cornerSize, cornerSize), 0x0);
 		drawCircleCornerOnSelector(panel,false, true,color);
 		panel.pixels.fillRect(new Rectangle(panel.width - cornerSize, panel.height - cornerSize, cornerSize, cornerSize), 0x0); //bottom right
 		drawCircleCornerOnSelector(panel,true, true,color);
