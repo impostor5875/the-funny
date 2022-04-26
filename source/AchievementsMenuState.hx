@@ -92,6 +92,7 @@ class AchievementsMenuState extends MusicBeatState
 	}
 
 	function changeSelection(change:Int = 0) {
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		curSelected += change;
 		if (curSelected < 0)
 			curSelected = options.length - 1;
@@ -99,6 +100,7 @@ class AchievementsMenuState extends MusicBeatState
 			curSelected = 0;
 
 		var bullShit:Int = 0;
+		trace("when the bs equals " + bullShit);
 
 		for (item in grpOptions.members) {
 			item.targetY = bullShit - curSelected;
