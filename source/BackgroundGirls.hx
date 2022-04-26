@@ -10,7 +10,6 @@ class BackgroundGirls extends FlxSprite
 	{
 		super(x, y);
 
-		// BG fangirls dissuaded
 		frames = Paths.getSparrowAtlas('weeb/bgFreaks');
 
 		swapDanceType();
@@ -23,10 +22,10 @@ class BackgroundGirls extends FlxSprite
 	public function swapDanceType():Void
 	{
 		isPissed = !isPissed;
-		if(!isPissed) { //Gets unpissed
+		if(!isPissed) {
 			animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
 			animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
-		} else { //Pisses
+		} else {
 			animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
 			animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
 		}
