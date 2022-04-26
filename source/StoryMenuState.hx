@@ -55,12 +55,13 @@ class StoryMenuState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		PlayState.isStoryMode = true;
-		WeekData.reloadWeekFiles(true);
+		WeekData.reloadWeekFiles(true); //shoulditdothis
 		if(curWeek >= WeekData.weeksList.length) curWeek = 0;
 		persistentUpdate = persistentDraw = true;
 
-		scoreText = new FlxText(10, 10, 0, "SCORE: 82828288213", 36);
+		scoreText = new FlxText(10, 10, 0, "SCORE: 1", 36);
 		scoreText.setFormat("VCR OSD Mono", 32);
+//		scoreText.persistentUpdate = true;
 
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
@@ -83,7 +84,6 @@ class StoryMenuState extends MusicBeatState
 		add(grpLocks);
 
 		#if desktop
-		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
@@ -103,9 +103,7 @@ class StoryMenuState extends MusicBeatState
 
 				weekThing.screenCenter(X);
 				weekThing.antialiasing = ClientPrefs.globalAntialiasing;
-				// weekThing.updateHitbox();
 
-				// Needs an offset thingie
 				if (isLocked)
 				{
 					var lock:FlxSprite = new FlxSprite(weekThing.width + 10 + weekThing.x);
@@ -190,13 +188,10 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-//		scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 30, 0, 1)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
-
-		// FlxG.watch.addQuick('font', scoreText.font);
 
 		if (!movedBack && !selectedWeek)
 		{
@@ -327,7 +322,6 @@ class StoryMenuState extends MusicBeatState
 
 		var diff:String = CoolUtil.difficulties[curDifficulty];
 		var newImage:FlxGraphic = Paths.image('menudifficulties/' + Paths.formatToSongPath(diff));
-		//trace(Paths.currentModDirectory + ', menudifficulties/' + Paths.formatToSongPath(diff));
 
 		if(sprDifficulty.graphic != newImage)
 		{
@@ -393,7 +387,7 @@ class StoryMenuState extends MusicBeatState
 
 		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
 		var diffStr:String = WeekData.getCurrentWeek().difficulties;
-		if(diffStr != null) diffStr = diffStr.trim(); //Fuck you HTML5
+		if(diffStr != null) diffStr = diffStr.trim();
 		difficultySelectors.visible = unlocked;
 
 		if(diffStr != null && diffStr.length > 0)
