@@ -63,7 +63,7 @@ class Prompt extends MusicBeatSubstate
 		buttons.animation.addByIndices('but0', 'buttons', [0], '', 0);
 		buttons.animation.addByIndices('but1', 'buttons', [1], '', 0);
 		buttons.animation.play('but0');
-		buttons.scrollFactor.set();/*
+		buttons.scrollFactor.set();*/
 		panel.scrollFactor.set();
 		panel.screenCenter();
 		panelbg.scrollFactor.set();
