@@ -1,6 +1,5 @@
 package animateatlas;
 
-//Soon
 typedef AnimationData = {
 	?ANIMATION:SymbolData,
 	?SYMBOL_DICTIONARY:{
@@ -70,13 +69,12 @@ typedef ElementData = {
 typedef SymbolInstanceData = {
 	SYMBOL_name:String,
 	Instance_Name:String,
-	//bitmap:BitmapPosData,  //NOOO
+	//bitmap:BitmapPosData,
 	symbolType:String,
 	transformationPoint:PointData,
 	Matrix3D:Matrix3DData,
 	?DecomposedMatrix:Decomposed3DData,
 	?color:ColorData,
-
 	?loop:String,
 	firstFrame:Int,
 	?filters:FilterData
@@ -123,7 +121,7 @@ typedef Matrix3DData = {
 	m32:Float,
 	m33:Float,
 }
-//tryna add more support gimme a sec
+
 typedef FilterData = {
 	?BlurFilter: {
 		blurX:Float,
