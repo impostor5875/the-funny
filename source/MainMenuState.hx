@@ -48,7 +48,6 @@ class MainMenuState extends MusicBeatState
 		#if MODS_ALLOWED 'mods', #end
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
 		'options'
 	];
 
@@ -63,7 +62,6 @@ class MainMenuState extends MusicBeatState
 		WeekData.loadTheFirstEnabledMod();
 
 		#if desktop
-		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
@@ -102,14 +100,9 @@ class MainMenuState extends MusicBeatState
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		magenta.color = 0xFFfd719b;
 		add(magenta);
-		
-		// magenta.scrollFactor.set();
 
 		var scale:Float = 1;
-		/*if(optionStuff.length > 6) {
-			scale = 6 / optionStuff.length;
-		}*/
-
+		
 		storyMode = new FlxSprite(10, -280);
 		storyMode.frames = Paths.getSparrowAtlas("mainmenu/menu_story_mode");
 		storyMode.animation.addByPrefix("idle", "story_mode basic", 24, true);
@@ -176,26 +169,6 @@ class MainMenuState extends MusicBeatState
 		introTimer = new FlxTimer();
 		introTimer.start(0.5);
 
-		/*for (i in 0...optionStuff.length)
-		{
-			var offset:Float = 108 - (Math.max(optionStuff.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
-			menuItem.scale.x = scale;
-			menuItem.scale.y = scale;
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionStuff[i]);
-			menuItem.animation.addByPrefix('idle', optionStuff[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionStuff[i] + " white", 24);
-			menuItem.animation.play('idle');
-			menuItem.ID = i;
-			menuItems.add(menuItem);
-			var scr:Float = (optionStuff.length - 4) * 0.135;
-			if(optionStuff.length < 6) scr = 0;
-			menuItem.scrollFactor.set(0, scr);
-			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-			menuItem.updateHitbox();
-		}*/
-
 		FlxG.camera.follow(camFollowPos, null, 1);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
@@ -206,8 +179,6 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-
-		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
 
@@ -228,7 +199,6 @@ class MainMenuState extends MusicBeatState
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
-	// Unlocks "Freaky on a Friday Night" achievement
 	function giveAchievement() {
 		add(new AchievementObject('friday_night_play', camAchievement));
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
@@ -412,45 +382,6 @@ class MainMenuState extends MusicBeatState
 							camFollow.setPosition(400, 390);
 
 					}
-
-					/*menuItems.forEach(function(spr:FlxSprite)
-					{
-						if (curSelected != spr.ID)
-						{
-							FlxTween.tween(spr, {alpha: 0}, 0.4, {
-								ease: FlxEase.quadOut,
-								onComplete: function(twn:FlxTween)
-								{
-									spr.kill();
-								}
-							});
-						}
-						else
-						{
-							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-							{
-								var daChoice:String = optionStuff[curSelected];
-
-								switch (daChoice)
-								{
-									case 'story_mode':
-										MusicBeatState.switchState(new StoryMenuState());
-									case 'freeplay':
-										MusicBeatState.switchState(new FreeplayState());
-									#if MODS_ALLOWED
-									case 'mods':
-										MusicBeatState.switchState(new ModsMenuState());
-									#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
-									case 'credits':
-										MusicBeatState.switchState(new CreditsState());
-									case 'options':
-										LoadingState.loadAndSwitchState(new options.OptionsState());
-								}
-							});
-						}
-					});*/
 				}
 			}
 			#if desktop
@@ -465,7 +396,7 @@ class MainMenuState extends MusicBeatState
 			{
 				curSelected = 1;
 				storyMode.animation.play('selected');
-				camFollow.setPosition(storyMode.getGraphicMidpoint().x - 90, 1); //don't ask me why this specific one has to be the x - 90. i don't know.
+				camFollow.setPosition(storyMode.getGraphicMidpoint().x - 90, 1);
 			}
 			else if (curSelected == 0)
 			{
@@ -481,11 +412,7 @@ class MainMenuState extends MusicBeatState
 	function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
-
-		/*if (curSelected >= menuItems.length)
-			curSelected = 0;
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;*/
+		
 		storyMode.animation.play('idle');
 		freeplay.animation.play('idle');
 		mods.animation.play('idle');
@@ -498,7 +425,7 @@ class MainMenuState extends MusicBeatState
 		{
 			case 1:
 				storyMode.animation.play('selected');
-				camFollow.setPosition(storyMode.getGraphicMidpoint().x - 90, 1); //don't ask me why this specific one has to be the x - 90. i don't know.
+				camFollow.setPosition(storyMode.getGraphicMidpoint().x - 90, 1);
 
 			case 2:
 				freeplay.animation.play('selected');
