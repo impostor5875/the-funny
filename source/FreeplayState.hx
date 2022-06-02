@@ -1,5 +1,6 @@
 package;
 
+import flixel.tweens.FlxEase;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -50,6 +51,12 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	var composerImage:FlxSprite;
+	var composerImageSlideIn:FlxSprite;
+	var composedByText:FlxText;
+	var composerText:FlxText;
+	var composerTween:FlxTween;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -85,7 +92,7 @@ class FreeplayState extends MusicBeatState
 				{
 					colors = [146, 113, 253];
 				}
-				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]), song[3]);
 			}
 		}
 		WeekData.loadTheFirstEnabledMod();
@@ -156,6 +163,23 @@ class FreeplayState extends MusicBeatState
 
 		add(scoreText);
 
+		composedByText = new FlxText(0 + 300, 400, 500, "Composed by", 200, false);
+		composedByText.x = FlxG.width / 2 + 200;
+		composedByText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(composedByText);
+
+		composerImageSlideIn = new FlxSprite(composedByText.x + 136, composedByText.y + 40, Paths.image("composers/no-image"));
+		add(composerImageSlideIn);
+
+		composerImage = new FlxSprite(composedByText.x + 136, composedByText.y + 40, Paths.image("composers/no-image"));
+		composerImage.alpha = 0;
+		add(composerImage);
+
+		composerText = new FlxText(0 + 300, composerImageSlideIn.y + 220, 380, "unknown", 200, false);
+		composerText.x = composedByText.x + 59;
+		composerText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(composerText);
+
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
@@ -212,9 +236,9 @@ class FreeplayState extends MusicBeatState
 		super.closeSubState();
 	}
 
-	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, composer:String)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, color, composer));
 	}
 
 	function weekIsLocked(name:String):Bool {
@@ -434,6 +458,37 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+
+		composerText.text = songs[curSelected].composer;
+		composerImageSlideIn.x = composerImageSlideIn.x + 300;
+		composerImageSlideIn.visible = true;
+
+		FlxTween.tween(composerImage, {y: composerImage.y + 50, alpha: 0}, 0.3, {ease: FlxEase.circOut});
+
+		if (!Paths.fileExists('images/composers/' + songs[curSelected].composer + '.png', IMAGE))
+		{
+			composerImageSlideIn.loadGraphic(Paths.image("composers/no-image"));
+			trace("you forgror the image!!!!!!!!!!!!!!!!!");
+			trace("oh and also: images/composers/" + songs[curSelected].composer + ".png");
+		}
+		else
+		{
+			composerImageSlideIn.loadGraphic(Paths.image("composers/" + songs[curSelected].composer));
+		}
+
+		if (composerTween != null)
+			composerTween.cancel();
+
+		composerTween = FlxTween.tween(composerImageSlideIn, {x: composedByText.x + 136}, 0.5, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
+			composerTween = null;
+			composerImage.alpha = 1;
+			composerImage.y = composedByText.y + 40;
+			composerImageSlideIn.visible = false;
+			if (!Paths.fileExists('images/composers/' + songs[curSelected].composer + '.png', IMAGE))
+				composerImage.loadGraphic(Paths.image("composers/no-image"));
+			else
+				composerImage.loadGraphic(Paths.image("composers/" + songs[curSelected].composer));
+		}});
 			
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
@@ -539,14 +594,16 @@ class SongMetadata
 	public var week:Int = 0;
 	public var songCharacter:String = "";
 	public var color:Int = -7179779;
+	public var composer:String = "";
 	public var folder:String = "";
 
-	public function new(song:String, week:Int, songCharacter:String, color:Int)
+	public function new(song:String, week:Int, songCharacter:String, color:Int, composer:String)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
 		this.color = color;
+		this.composer = composer;
 		this.folder = Paths.currentModDirectory;
 		if(this.folder == null) this.folder = '';
 	}

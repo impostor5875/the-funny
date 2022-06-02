@@ -367,7 +367,7 @@ class WeekEditorState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Week Editor", "Editting: " + weekFileName);
+		DiscordClient.changePresence("Week Editor", "Editing: " + weekFileName);
 		#end
 	}
 	
@@ -401,12 +401,13 @@ class WeekEditorState extends MusicBeatState
 
 				for (i in 0...splittedText.length) {
 					if(i >= weekFile.songs.length) { //Add new song
-						weekFile.songs.push([splittedText[i], 'dad', [146, 113, 253]]);
+						weekFile.songs.push([splittedText[i], 'dad', [146, 113, 253], "unknown"]);
 					} else { //Edit song
 						weekFile.songs[i][0] = splittedText[i];
 						if(weekFile.songs[i][1] == null || weekFile.songs[i][1]) {
 							weekFile.songs[i][1] = 'dad';
 							weekFile.songs[i][2] = [146, 113, 253];
+							weekFile.songs[i][3] = "unknown";
 						}
 					}
 				}
@@ -591,6 +592,9 @@ class WeekEditorFreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<HealthIcon> = [];
+	var composerImage:FlxSprite;
+	var composedByText:FlxText;
+	var composerText:FlxText;
 
 	var curSelected = 0;
 
@@ -622,6 +626,19 @@ class WeekEditorFreeplayState extends MusicBeatState
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			// songText.screenCenter(X);
 		}
+
+		composedByText = new FlxText(0 + 300, 10, 500, "Composed by", 200, false);
+		composedByText.x = FlxG.width / 2 + 200;
+		composedByText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(composedByText);
+
+		composerImage = new FlxSprite(composedByText.x + 136, composedByText.y + 40, Paths.image("composers/no-image"));
+		add(composerImage);
+
+		composerText = new FlxText(0 + 300, composerImage.y + 220, 380, "unknown", 200, false);
+		composerText.x = composedByText.x + 59;
+		composerText.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(composerText);
 
 		addEditorBox();
 		changeSelection();
@@ -674,6 +691,20 @@ class WeekEditorFreeplayState extends MusicBeatState
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			weekFile.songs[curSelected][1] = iconInputText.text;
 			iconArray[curSelected].changeIcon(iconInputText.text);
+
+			weekFile.songs[curSelected][3] = composerInputText.text;
+			composerText.text = composerInputText.text;
+			
+			if (!Paths.fileExists('images/composers/' + composerInputText.text + '.png', IMAGE))
+			{
+				composerImage.loadGraphic(Paths.image("composers/no-image"));
+				trace("you forgror the image!!!!!!!!!!!!!!!!!");
+				trace("oh and also: images/composers/" + composerInputText.text + ".png");
+			}
+			else
+			{
+				composerImage.loadGraphic(Paths.image("composers/" + composerInputText.text));
+			}	
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
 			if(sender == bgColorStepperR || sender == bgColorStepperG || sender == bgColorStepperB) {
 				updateBG();
@@ -685,6 +716,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 	var bgColorStepperG:FlxUINumericStepper;
 	var bgColorStepperB:FlxUINumericStepper;
 	var iconInputText:FlxUIInputText;
+	var composerInputText:FlxUIInputText;
 	function addFreeplayUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Freeplay";
@@ -720,6 +752,8 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 		iconInputText = new FlxUIInputText(10, bgColorStepperR.y + 70, 100, '', 8);
 
+		composerInputText = new FlxUIInputText(iconInputText.x + 110, bgColorStepperR.y + 70, 100, '', 8);
+
 		var hideFreeplayCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "Hide Week from Freeplay?", 100);
 		hideFreeplayCheckbox.checked = weekFile.hideFreeplay;
 		hideFreeplayCheckbox.callback = function()
@@ -729,12 +763,14 @@ class WeekEditorFreeplayState extends MusicBeatState
 		
 		tab_group.add(new FlxText(10, bgColorStepperR.y - 18, 0, 'Selected background Color R/G/B:'));
 		tab_group.add(new FlxText(10, iconInputText.y - 18, 0, 'Selected icon:'));
+		tab_group.add(new FlxText(composerInputText.x, composerInputText.y - 18, 0, 'Composer:'));
 		tab_group.add(bgColorStepperR);
 		tab_group.add(bgColorStepperG);
 		tab_group.add(bgColorStepperB);
 		tab_group.add(copyColor);
 		tab_group.add(pasteColor);
 		tab_group.add(iconInputText);
+		tab_group.add(composerInputText);
 		tab_group.add(hideFreeplayCheckbox);
 		UI_box.addGroup(tab_group);
 	}
@@ -780,6 +816,20 @@ class WeekEditorFreeplayState extends MusicBeatState
 		}
 		trace(weekFile.songs[curSelected]);
 		iconInputText.text = weekFile.songs[curSelected][1];
+		composerInputText.text = weekFile.songs[curSelected][3];
+		composerText.text = weekFile.songs[curSelected][3];
+
+		if (!Paths.fileExists('images/composers/' + composerInputText.text + '.png', IMAGE))
+		{
+			composerImage.loadGraphic(Paths.image("composers/no-image"));
+			trace("you forgror the image!!!!!!!!!!!!!!!!!");
+			trace("oh and also: images/composers/" + composerInputText.text + ".png");
+		}
+		else
+		{
+			composerImage.loadGraphic(Paths.image("composers/" + composerInputText.text));
+		}
+
 		bgColorStepperR.value = Math.round(weekFile.songs[curSelected][2][0]);
 		bgColorStepperG.value = Math.round(weekFile.songs[curSelected][2][1]);
 		bgColorStepperB.value = Math.round(weekFile.songs[curSelected][2][2]);
@@ -796,7 +846,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 			return;
 		}
 		
-		if(iconInputText.hasFocus) {
+		if(iconInputText.hasFocus || composerInputText.hasFocus) {
 			FlxG.sound.muteKeys = [];
 			FlxG.sound.volumeDownKeys = [];
 			FlxG.sound.volumeUpKeys = [];
