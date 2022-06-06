@@ -153,21 +153,46 @@ class ChartingState extends MusicBeatState
 	var zoomTxt:FlxText;
 	var curZoom:Int = 1;
 
-	#if !html5
+	#if !html5 //The grid gets all black when over 1/24 snap?
 	var zoomList:Array<Float> = [
 		0.5,
+		0.7,
 		1,
+		1.5,
 		2,
+		3,
 		4,
+		5,
+		6,
+		7,
+		7.3,
 		8,
+		9,
+		10,
+		11,
 		12,
+		13,
+		13.6,
+		14,
+		15,
 		16,
-		24
+		17,
+		18,
+		19,
+		20,
+		21,
+		21.8,
+		22,
+		23,
+		23.2,
+		24,
+		24.1
 	];
 	#else //The grid gets all black when over 1/12 snap
 	var zoomList:Array<Float> = [
 		0.5,
 		1,
+		1.5,
 		2,
 		4,
 		8,
@@ -1269,7 +1294,7 @@ class ChartingState extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			FlxG.sound.music.stop();
-			// vocals.stop();
+			// vocals.pause(); // Not USED!!
 		}
 
 		var file:Dynamic = Paths.voices(currentSongName);
@@ -1334,15 +1359,15 @@ class ChartingState extends MusicBeatState
 			{
 				case 'Must hit section':
 					_song.notes[curSection].mustHitSection = check.checked;
-
-					updateGrid();
-					updateHeads();
+					
+					updateGrid(); // when the sus
+					updateHeads(); // when the sus
 
 				case 'GF section':
 					_song.notes[curSection].gfSection = check.checked;
-
-					updateGrid();
-					updateHeads();
+					
+					updateGrid(); // when the sus
+					updateHeads(); // when the sus
 
 				case 'Change BPM':
 					_song.notes[curSection].changeBPM = check.checked;
