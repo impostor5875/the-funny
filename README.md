@@ -3,7 +3,7 @@ every single piece of new code that relates to shaders is stolen from strident e
 
 also flxtweens are good
 
-btw this was the build used in manny edition v3
+btw this was the build used in manny edition v3 and the upcoming v4
 
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
