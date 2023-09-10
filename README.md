@@ -1,4 +1,13 @@
-# IGNORE THE COMMITS IN MAIN, THOSE WERE ON ACCIDENT!!!!!
+# manny engine but fixed woww!!!!!!!!!!!!!!!!!!
+the engine actually has two built in wavy shaders:
+addWavyEffect
+addFlagEffect
+
+might add more soon i don't know aaaaaaaaaaaaaaa
+also imposter if you want this to be taken down contact me in my discord "misticalalign"
+and also this engine has funny eyesores, composer image thingy on the freeplay menu, and antispam. 🐡
+all the scripts used in this fixed engine were taken from manny edition v4,,,,,,,,,
+
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
